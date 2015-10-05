@@ -1,8 +1,8 @@
 require_relative 'piece'
 
 class SlidingPiece < Piece
-  def initialize(position, board)
-    super(position, board)
+  def initialize(position, color, board)
+    super(position, color, board)
     @diagonal = nil
     @horiz_vert = nil
   end
@@ -35,7 +35,12 @@ class SlidingPiece < Piece
 
     dirs.map do |dir|
         pos = position
-        while in_range?(pos)
+        go = true
+        while in_range?(pos) && go
+          if !board[pos].nil?
+            go = false
+            capturable?(pos) ? nil : next
+          end
         moves << pos unless pos == position
         pos = pos[0] + dir[0], pos[1] + dir[1]
         end

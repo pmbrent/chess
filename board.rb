@@ -26,7 +26,7 @@ class Board
       if rows.include?(idr)
         grid[idr].each_index do |idy|
         pos = [idr,idy]
-        self[pos] = Piece.new(pos)
+        self[pos] = Piece.new(pos,"white",self)
         end
       end
     end
