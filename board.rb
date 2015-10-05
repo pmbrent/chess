@@ -1,3 +1,5 @@
+require_relative "piece"
+require "byebug"
 class Board
 
   attr_accessor :grid
@@ -9,6 +11,7 @@ class Board
 
   def [](pos)
     x,y = pos
+    # debugger
     grid[x][y]
   end
 
@@ -19,16 +22,15 @@ class Board
 
   def place_pieces
     rows = [0,1,6,7]
-    rows.each do |idx|
-      fill_row(grid[idx])
+    grid.each_index do |idr|
+      if rows.include?(idr)
+        grid[idr].each_index do |idy|
+        pos = [idr,idy]
+        self[pos] = Piece.new(pos)
+        end
+      end
     end
 
-  end
-
-  def fill_row(row)
-    row.map! do |square|
-      square = Piece.new
-    end
   end
 
   def move(start,end_pos)
@@ -48,6 +50,7 @@ class Board
     # handle if piece at end_pos
     self[end_pos] = cur_piece
     self[start] = nil
+  end
 
 end
 

@@ -4,4 +4,8 @@ class Piece
     @position
   end
 
+  def display
+    "p"
+  end
+
 end
