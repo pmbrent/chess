@@ -28,6 +28,7 @@ class Display
 
   end
 
+
   def get_input
     input = STDIN.getc
     raise CursorError.new("Invalid key") if !KEYMAP.include?(input)
