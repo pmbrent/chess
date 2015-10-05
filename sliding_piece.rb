@@ -15,10 +15,6 @@ class SlidingPiece < Piece
     @diagonal
   end
 
-  def in_range?(pos)
-    (0..7).include?(pos[0]) && (0..7).include?(pos[1])
-  end
-
   def moves
     moves = []
     dirs = []
