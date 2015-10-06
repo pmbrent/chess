@@ -18,6 +18,10 @@ end
 
 class Knight < SteppingPiece
 
+  def display
+    "N"
+  end
+
   def move_dirs
     [
      [-2, -1],
@@ -34,6 +38,10 @@ class Knight < SteppingPiece
 end
 
 class King < SteppingPiece
+
+  def display
+    "K"
+  end
   def move_dirs
     [
       [0,1],

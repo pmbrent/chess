@@ -64,6 +64,7 @@ def handle_move(input)
     else
       self.selected = cursor
     end
+  end
 end
 
 

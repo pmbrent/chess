@@ -1,5 +1,10 @@
 require_relative "piece"
+require_relative "stepping_piece"
+require_relative "sliding_piece"
+require_relative "display"
+
 require "byebug"
+
 class Board
 
   attr_accessor :grid
@@ -20,15 +25,42 @@ class Board
     grid[x][y] = value
   end
 
+  def piece_helper(pos, color)
+    piece_array = [:r,:n,:b,:q,:k,:b,:n,:r]
+
+    symb = piece_array[pos[1]]
+
+    if symb == :r
+      Rook.new(pos,color,self)
+    elsif symb == :n
+      Knight.new(pos,color,self)
+    elsif symb == :b
+      Bishop.new(pos,color,self)
+    elsif symb == :q
+      Queen.new(pos,color,self)
+    elsif symb == :k
+      King.new(pos,color,self)
+    end
+
+  end
+
   def place_pieces
-    rows = [0,1,6,7]
-    grid.each_index do |idr|
-      if rows.include?(idr)
-        grid[idr].each_index do |idy|
-        pos = [idr,idy]
-        self[pos] = Piece.new(pos,"white",self)
-        end
-      end
+    grid[0].each_index do |idx|
+      pos = [0,idx]
+      self[pos] = piece_helper(pos,:black)
+    end
+    grid[7].each_index do |idx|
+      pos = [7,idx]
+      self[pos] = piece_helper(pos,:white)
+    end
+
+    grid[1].each_index do |idx|
+      pos = [1,idx]
+      self[pos] = Pawn.new(pos,:black,self)
+    end
+    grid[6].each_index do |idx|
+      pos = [6,idx]
+      self[pos] = Pawn.new(pos,:white,self)
     end
 
   end

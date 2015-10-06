@@ -1,5 +1,3 @@
-require_relative 'piece'
-
 class SlidingPiece < Piece
   def initialize(position, color, board)
     super(position, color, board)
@@ -52,28 +50,38 @@ class SlidingPiece < Piece
 end
 
 class Bishop < SlidingPiece
-  def initialize(position, board)
-    super(position, board)
+  def initialize(position, color, board)
+    super
     @diagonal = true
     @horiz_vert = false
+  end
+
+  def display
+    "B"
   end
 
 end
 
 class Rook < SlidingPiece
-  def initialize(position, board)
-    super(position, board)
+  def initialize(position, color, board)
+    super
     @diagonal = false
     @horiz_vert = true
+  end
+  def display
+    "R"
   end
 
 end
 
 class Queen < SlidingPiece
-  def initialize(position, board)
-    super(position, board)
+  def initialize(position, color, board)
+    super
     @diagonal = true
     @horiz_vert = true
+  end
+  def display
+    "Q"
   end
 
 end

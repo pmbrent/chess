@@ -7,7 +7,7 @@ class Piece
   end
 
   def display
-    "p"
+
   end
 
   def moves
@@ -28,8 +28,13 @@ end
 
 class Pawn < Piece
   attr_accessor :first_move
-  def initialize
+  def initialize(position, color, board)
+    super
     @first_move = true
+  end
+
+  def display
+    "p"
   end
 
   def moves
