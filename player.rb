@@ -1,6 +1,7 @@
 class Player
   attr_reader :color
-  
+  attr_accessor :display, :board
+
   def initialize(color,display,board)
     @color = color
     @display = display
@@ -10,7 +11,7 @@ class Player
 end
 
 
-class HumanPlayer << Player
+class HumanPlayer < Player
 
   def initialize(color,display,board)
     super
@@ -18,14 +19,16 @@ class HumanPlayer << Player
 
   def play_turn
     turn_over = false
+    
     until turn_over
       display.render
       display.get_input
-      if display.selected? && display.last_input_select
+      if display.selected && display.second_select
+        # debugger
         turn_over = board.move(display.selected,display.cursor)
-      else
         display.selected = nil
       end
     end
 
   end
+end

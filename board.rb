@@ -42,19 +42,17 @@ class Board
     end
 
     if moved
-      cur_piece.position = end_pos
-      # handle if piece at end_pos
-      self[end_pos] = cur_piece
-      self[start] = nil
+      move!(start, end_pos)
+
     end
     moved
   end
 
   def move!(start,end_pos)
 
+    debugger
     cur_piece = self[start]
     cur_piece.position = end_pos
-    # handle if piece at end_pos
     self[end_pos] = cur_piece
     self[start] = nil
 
@@ -154,7 +152,6 @@ class Board
       pos = [6,idx]
       self[pos] = Pawn.new(pos,:white,self)
     end
-
   end
 
 end

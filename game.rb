@@ -5,10 +5,16 @@ class Game
   attr_reader :players
   attr_accessor :board, :display, :current_player
 
-  def initialize()
+  def initialize(computer = false)
+
     @board = Board.new
     @display = Display.new(board,self)
-    @players = [Player.new(:white), Player.new(:black)]
+    if !computer
+      @players = [HumanPlayer.new(:white,display,board),
+                  HumanPlayer.new(:black,display,board)]
+    else
+      #implement comp player
+    end
     @current_player = players[0]
   end
 
@@ -18,10 +24,11 @@ class Game
 
     until game_over
       current_player.play_turn
+      
       if current_player == players[0]
-        current_player = players[1]
+        self.current_player = players[1]
       else
-        current_player = players[0]
+        self.current_player = players[0]
       end
     end
 
@@ -31,4 +38,8 @@ class Game
     # include draws later (3x repetition, 50-move?)
     return board.checkmate?(:white) || board.checkmate?(:black)
   end
+end
+
+if __FILE__ == $PROGRAM_NAME
+  Game.new.play
 end

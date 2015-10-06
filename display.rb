@@ -1,10 +1,11 @@
 require 'colorize'
 require 'io/console'
-require_relative "board"
+require 'byebug'
+require_relative 'board'
 
 class Display
 
-  attr_accessor :board, :game, :cursor, :selected, :last_input_select
+  attr_accessor :board, :game, :cursor, :selected, :second_select
 
   KEYMAP = {
     "w" => :up,
@@ -24,8 +25,8 @@ class Display
     @board = board
     @game = game
     @cursor = [0,0]
-    @selected = [0,0]
-    @last_input_select? = false
+    @selected = nil
+    @second_select = false
 
   end
 
@@ -46,12 +47,15 @@ class Display
     puts e.message
     retry
   ensure
-    # system("stty -raw echo")
     handle_input(KEYMAP[input])
   end
 
 def handle_input(input)
-  last_input_select = false
+  self.second_select = false
+  p input
+  p self.selected
+  p self.cursor
+  sleep(0.5)
   if input == :up
     self.cursor[0] -= 1
   elsif input == :down
@@ -61,9 +65,12 @@ def handle_input(input)
   elsif input == :right
     self.cursor[1] += 1
   elsif input == :select
-    if board[cursor].color == game.current_player.color
-      last_input_select = true
-      self.selected ||= cursor
+    if !selected && (board[cursor].color == game.current_player.color)
+
+      self.selected = cursor.dup
+
+    elsif selected
+      self.second_select = true
     end
   end
 end
