@@ -22,6 +22,24 @@ class Piece
     !other.nil? && (other.color != color)
   end
 
+  def move_into_check?(pos)
+    copy_board = board.dup
+
+    copy_board.move(position,pos)
+    copy_board.in_check?(color)
+  end
+
+
+
+  def valid_moves
+
+    val_moves = moves
+
+
+
+
+  end
+
 end
 
 
@@ -40,14 +58,14 @@ class Pawn < Piece
   def moves
     moves = []
     if first_move
-      moves << [pos[0], pos[1] + 2]
+      moves << [position[0], position[1] + 2]
       first_move = false
     end
-    forward = [pos[0], pos[1] + 1]
+    forward = [position[0], position[1] + 1]
     moves << forward if in_range?(forward)
 
-    left_cap = [pos[0] - 1, pos[1] + 1]
-    right_cap = [pos[0] + 1, pos[1] + 1]
+    left_cap = [position[0] - 1, position[1] + 1]
+    right_cap = [position[0] + 1, position[1] + 1]
 
     moves << left_cap if in_range?(left_cap) && capturable?(left_cap)
     moves << right_cap if in_range?(right_cap) && capturable?(right_cap)
