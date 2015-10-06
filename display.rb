@@ -82,10 +82,12 @@ end
           (idx + idy) % 2 == 0 ? bg = :light_blue : bg = :blue
         end
 
-        el ? char = el.display : char = " "
-
-        square = char.colorize(:white).colorize( :background => bg )
-
+        if el
+          square = el.display.colorize(el.color).colorize( :background => bg )
+        else
+          square = " ".colorize(:white).colorize( :background => bg )
+        end
+        
         result << square
 
       end
