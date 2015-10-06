@@ -34,6 +34,8 @@ class Board
   end
 
   def move(start,end_pos)
+    moved = true
+
     begin
       if valid?(end_pos)
         raise PosError.new("Invalid end position")
@@ -42,14 +44,17 @@ class Board
       end
     rescue PosError => e
       puts e.message
-      retry
+      moved = false
     end
 
-    cur_piece = self[start]
-    cur_piece.position = end_pos
-    # handle if piece at end_pos
-    self[end_pos] = cur_piece
-    self[start] = nil
+    if moved
+      cur_piece = self[start]
+      cur_piece.position = end_pos
+      # handle if piece at end_pos
+      self[end_pos] = cur_piece
+      self[start] = nil
+    end
+    moved
   end
 
 end
