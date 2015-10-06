@@ -4,7 +4,7 @@ require_relative "board"
 
 class Display
 
-  attr_accessor :board, :game, :cursor, :selected
+  attr_accessor :board, :game, :cursor, :selected, :last_input_select
 
   KEYMAP = {
     "w" => :up,
@@ -19,12 +19,13 @@ class Display
     "\r" => :select
   }
 
-  def initialize(board)
+  def initialize(board,game)
 
     @board = board
     @game = game
     @cursor = [0,0]
     @selected = [0,0]
+    @last_input_select? = false
 
   end
 
@@ -46,10 +47,11 @@ class Display
     retry
   ensure
     # system("stty -raw echo")
-    handle_move(KEYMAP[input])
+    handle_input(KEYMAP[input])
   end
 
-def handle_move(input)
+def handle_input(input)
+  last_input_select = false
   if input == :up
     self.cursor[0] -= 1
   elsif input == :down
@@ -59,10 +61,9 @@ def handle_move(input)
   elsif input == :right
     self.cursor[1] += 1
   elsif input == :select
-    if self.selected
-      self.selected = nil
-    else
-      self.selected = cursor
+    if board[cursor].color == game.current_player.color
+      last_input_select = true
+      self.selected ||= cursor
     end
   end
 end
@@ -87,7 +88,7 @@ end
         else
           square = " ".colorize(:white).colorize( :background => bg )
         end
-        
+
         result << square
 
       end

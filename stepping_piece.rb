@@ -4,8 +4,6 @@ class SteppingPiece < Piece
     moves = []
     dirs = move_dirs
 
-
-
     dirs.map do |dir|
         pos = position
         pos = pos[0] + dir[0], pos[1] + dir[1]
