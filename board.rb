@@ -28,9 +28,10 @@ class Board
 
   def move(start,end_pos)
     moved = true
+    cur_piece = self[start]
 
     begin
-      if valid?(end_pos)
+      if !cur_piece.valid_moves.include?(end_pos)
         raise PosError.new("Invalid end position")
       elsif self[start].nil?
         raise PosError.new("Invalid starting position")
@@ -41,13 +42,22 @@ class Board
     end
 
     if moved
-      cur_piece = self[start]
       cur_piece.position = end_pos
       # handle if piece at end_pos
       self[end_pos] = cur_piece
       self[start] = nil
     end
     moved
+  end
+
+  def move!(start,end_pos)
+
+    cur_piece = self[start]
+    cur_piece.position = end_pos
+    # handle if piece at end_pos
+    self[end_pos] = cur_piece
+    self[start] = nil
+
   end
 
   def in_check?(color)

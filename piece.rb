@@ -25,19 +25,14 @@ class Piece
   def move_into_check?(pos)
     copy_board = board.dup
 
-    copy_board.move(position,pos)
+    copy_board.move!(position,pos)
     copy_board.in_check?(color)
   end
 
-
-
   def valid_moves
-
-    val_moves = moves
-
-
-
-
+    all_moves = moves
+    valid_moves = all_moves.select { |move| !move_into_check?(move)}
+    valid_moves
   end
 
 end
