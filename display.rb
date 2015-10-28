@@ -17,7 +17,8 @@ class Display
     "\e[C" => :right,
     "\e[D" => :left,
     " " => :select,
-    "\r" => :select
+    "\r" => :select,
+    "q" => :quit
   }
 
   def initialize(board,game)
@@ -52,11 +53,13 @@ class Display
 
 def handle_input(input)
   self.second_select = false
-  p input
-  p self.selected
-  p self.cursor
-  sleep(0.5)
-  if input == :up
+  # p input
+  # p self.selected
+  # p self.cursor
+  # sleep(0.5)
+  if input == :quit
+    exit
+  elsif input == :up
     self.cursor[0] -= 1
   elsif input == :down
     self.cursor[0] += 1

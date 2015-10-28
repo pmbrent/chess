@@ -24,7 +24,7 @@ class Game
 
     until game_over
       current_player.play_turn
-      
+
       if current_player == players[0]
         self.current_player = players[1]
       else
